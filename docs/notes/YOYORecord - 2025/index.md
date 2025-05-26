@@ -16,6 +16,7 @@ AJohn一直催我写周记，那他自己为什么不写？
   <LinkCard title="2025W17 如非必要 勿增实体" href="/record/2025/17/" />
   <LinkCard title="2025W18-19 认识你自己" href="/record/2025/18/" />
   <LinkCard title="2025W20 人是万物的尺度" href="/record/2025/20/" />
+  <LinkCard title="2025W21 存在先于本质" href="/record/2025/21/" />
 </CardGrid>
 :::
 
