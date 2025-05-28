@@ -1,13 +1,13 @@
 import { defineClientConfig } from 'vuepress/client'
-// import RepoCard from 'vuepress-theme-plume/features/RepoCard.vue'
-// import CustomComponent from './theme/components/Custom.vue'
+import CustomHome from './theme/components/CustomHome.vue'
+import CustomHomeTitle from './theme/components/CustomHomeTitle.vue';
 
 import './theme/styles/custom.css'
 import './theme/styles/image.css'
 
 export default defineClientConfig({
   enhance({ app }) {
-    // app.component('RepoCard', RepoCard)
-    // app.component('CustomComponent', CustomComponent)
+    app.component('CustomHome', CustomHome)
+    app.component('CustomHomeTitle', CustomHomeTitle)
   },
 })
