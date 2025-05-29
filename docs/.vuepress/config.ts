@@ -18,7 +18,7 @@ export default defineUserConfig({
 
   theme: plumeTheme({
     notes,
-    
+
     hostname: 'https://www.yoake.cc',
     footer: {
       message: `
@@ -29,6 +29,12 @@ export default defineUserConfig({
         <span style="font-size:11px;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;">
           冀 ICP 备 2025102465号-1 · 京公网安备 11011502038573 号
         </span>`,
+    },
+
+    encrypt: {
+      rules: {
+        '/record/': 'YOYORecord'
+      }
     },
 
     plugins: {
