@@ -42,5 +42,9 @@ export default defineUserConfig({
       search: false,
       shiki: { langs: [] },
     },
+
+    markdown: {
+      timeline: true
+    }
   }),
 })
