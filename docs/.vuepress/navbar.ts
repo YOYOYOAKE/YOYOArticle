@@ -32,6 +32,7 @@ export const navbar = defineNavbarConfig([
       { text: '现代计算机图形学入门', link: '/graphics/' },
       { text: '从零开始学 Java', link: '/java/' },
       { text: '深度学习浅水区', link: '/deeplearning/' },
+      { text: 'React 快速上手', link: '/react/' },
     ],
     icon: 'material-symbols:book-4-spark-rounded'
   },

@@ -20,7 +20,7 @@ const graphics = defineNoteConfig({
       text: '现代计算机图形学入门',
       link: 'index.md',
       items: 'auto'
-    }, 
+    },
   ]
 })
 
@@ -32,7 +32,7 @@ const java = defineNoteConfig({
       text: 'Java',
       link: 'index.md',
       items: 'auto'
-    }, 
+    },
   ]
 })
 
@@ -44,7 +44,19 @@ const deeplearning = defineNoteConfig({
       text: '深度学习浅水区',
       link: 'index.md',
       items: 'auto'
-    }, 
+    },
+  ]
+})
+
+const react = defineNoteConfig({
+  dir: 'YOYORepos/react',
+  link: '/react/',
+  sidebar: [
+    {
+      text: 'React 快速上手',
+      link: 'index.md',
+      items: 'auto'
+    },
   ]
 })
 
@@ -56,5 +68,6 @@ export const notes = defineNotesConfig({
     graphics,
     java,
     deeplearning,
+    react,
   ],
 })
