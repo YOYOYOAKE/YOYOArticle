@@ -60,6 +60,18 @@ const react = defineNoteConfig({
   ]
 })
 
+const ts = defineNoteConfig({
+  dir: 'YOYORepos/type-challanges/',
+  link: '/type-challanges/',
+  sidebar: [
+    {
+      text: 'TypeScript 类型体操',
+      link: 'index.md',
+      items: 'auto'
+    },
+  ]
+})
+
 export const notes = defineNotesConfig({
   dir: 'notes',
   link: '/',
@@ -69,5 +81,6 @@ export const notes = defineNotesConfig({
     java,
     deeplearning,
     react,
+    ts,
   ],
 })

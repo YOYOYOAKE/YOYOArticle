@@ -33,6 +33,7 @@ export const navbar = defineNavbarConfig([
       { text: '从零开始学 Java', link: '/java/' },
       { text: '深度学习浅水区', link: '/deeplearning/' },
       { text: 'React 快速上手', link: '/react/' },
+      { text: 'TypeScript 类型体操', link: '/type-challanges/' },
     ],
     icon: 'material-symbols:book-4-spark-rounded'
   },
