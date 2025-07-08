@@ -44,7 +44,8 @@ export default defineUserConfig({
     },
 
     markdown: {
-      timeline: true
+      timeline: true,
+      codeTree: true,
     }
   }),
 })
