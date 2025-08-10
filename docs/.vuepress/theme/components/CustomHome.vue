@@ -2,10 +2,6 @@
 import { onMounted, onUnmounted, nextTick } from 'vue'
 
 onMounted(async () => {
-  await nextTick()
-
-  setTimeout(() => { }, 50)
-
   const canvas = document.getElementById('background') as HTMLCanvasElement
 
   if (canvas) {
@@ -180,6 +176,8 @@ onMounted(async () => {
         }
       }
 
+      updateCanvasSize()
+
       // 绘制海浪背景
       const drawWave = () => {
         if (!ctx) return
@@ -335,7 +333,6 @@ onMounted(async () => {
         canvas.addEventListener('mousemove', handleMouseMove)
       }
 
-      updateCanvasSize()
       animate()
 
       onUnmounted(() => {
