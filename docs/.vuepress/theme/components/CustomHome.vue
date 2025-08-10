@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, nextTick } from 'vue'
 
-onMounted(() => {
+onMounted(async () => {
+  await nextTick()
+
+  setTimeout(() => { }, 50)
+
   const canvas = document.getElementById('background') as HTMLCanvasElement
 
   if (canvas) {
