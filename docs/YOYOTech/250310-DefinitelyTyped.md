@@ -1,5 +1,5 @@
 ---
-title: 贡献开源代码：Definitely Typed 贡献小记
+title: Definitely Typed 贡献小记
 createTime: 2025/03/10 19:29:41
 permalink: /article/mqdx10ex/
 tags:

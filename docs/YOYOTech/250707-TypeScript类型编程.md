@@ -1,5 +1,5 @@
 ---
-title: 深入探索 TypeScript：类型编程
+title: TypeScript 类型编程
 createTime: 2025/07/07 08:50:58
 permalink: /article/wm0esi3k/
 ---

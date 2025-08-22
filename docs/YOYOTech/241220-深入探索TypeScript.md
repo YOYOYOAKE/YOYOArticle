@@ -1,5 +1,5 @@
 ---
-title: 深入探索TypeScript：不仅仅是JavaScript+Type
+title: 初步探索 TypeScript
 createTime: 2024/12/20 09:42:18
 permalink: /article/9nbewde3/
 tags:

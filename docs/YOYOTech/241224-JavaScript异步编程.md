@@ -1,5 +1,5 @@
 ---
-title: 从Promise到Async/Await：解析JavaScript异步编程 
+title: 解析 JavaScript 异步编程 
 createTime: 2024/12/24 14:01:11
 permalink: /article/b75jy61l/
 tags:

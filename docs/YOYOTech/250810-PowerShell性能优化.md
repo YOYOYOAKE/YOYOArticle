@@ -1,5 +1,5 @@
 ---
-title: 终端起飞：PowerShell 性能优化
+title: 下一阶段的 PowerShell 美化与性能优化
 createTime: 2025/08/10 12:07:20
 permalink: /article/affxl6db/
 ---
