@@ -2,6 +2,8 @@
 title: TypeScript 类型编程
 createTime: 2025/07/07 08:50:58
 permalink: /article/wm0esi3k/
+tags:
+  - JavaScript / TypeScript
 ---
 
 > TypeScript 类型编程指的是使用泛型+条件类型+映射类型+递归类型等技术手段，**仅在类型层面完成复杂逻辑**。

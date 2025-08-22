@@ -2,6 +2,8 @@
 title: 下一阶段的 PowerShell 美化与性能优化
 createTime: 2025/08/10 12:07:20
 permalink: /article/affxl6db/
+tags:
+  - Others
 ---
 
 > 我在之前写过一篇关于 PowerShell 美化的博客，其中用到了 Oh-My-Posh 这个组件。
