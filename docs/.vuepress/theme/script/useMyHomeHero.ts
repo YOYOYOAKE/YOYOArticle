@@ -9,11 +9,16 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
   let canvasHeight: number = 0
   let renderRatio: number = 0.75
 
+  let mouseX: number = 0
+  let mouseY: number = 0
+
   const particles: {
     x: number
     y: number
     vx: number
     vy: number
+    color: string
+    distSq: number
   }[] = []
 
   const resizeCanvas = () => {
@@ -23,14 +28,24 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
     const dpr = window.devicePixelRatio || 1
 
     // Canvas 画布尺寸
-    canvasWidth = rect.width * dpr * renderRatio
-    canvasHeight = rect.height * dpr * renderRatio
+    canvasWidth = rect.width
+    canvasHeight = rect.height
 
-    canvas.value.width = canvasWidth
-    canvas.value.height = canvasHeight
+    canvas.value.width = canvasWidth * dpr * renderRatio
+    canvas.value.height = canvasHeight * dpr * renderRatio
 
     ctx = canvas.value.getContext('2d')!
-    ctx.scale(dpr, dpr)
+    ctx.setTransform(dpr * renderRatio, 0, 0, dpr * renderRatio, 0, 0)
+  }
+
+  const handleMouseMove = (event: MouseEvent) => {
+    if (!canvas.value) return
+
+    const rect = canvas.value.getBoundingClientRect()
+
+    // 计算鼠标在画布上的坐标
+    mouseX = event.clientX - rect.left
+    mouseY = event.clientY - rect.top
   }
 
   const draw = () => {
@@ -74,22 +89,37 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
       particle.vy += (Math.random() - 0.5) * 0.01
 
       // 限制速度
-      const maxSpeed = 1.5
-      const maxSpeedSq = maxSpeed * maxSpeed
       const speedSq = particle.vx * particle.vx + particle.vy * particle.vy
-      if (speedSq > maxSpeedSq) {
-        const speed = Math.sqrt(speedSq)
-        particle.vx = (particle.vx / speed) * maxSpeed
-        particle.vy = (particle.vy / speed) * maxSpeed
+      if (speedSq > 2.25) {
+        particle.vx *= 0.9
+        particle.vy *= 0.9
       }
+
+      // 计算距离平方
+      const dx = particle.x - mouseX
+      const dy = particle.y - mouseY
+      particle.distSq = dx * dx + dy * dy
     })
 
-    // 绘制粒子
+    // 绘制高亮粒子
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+    ctx.beginPath()
+    particles.forEach(particle => {
+      if (particle.distSq <= 10000) {
+        ctx.moveTo(particle.x + 1.5, particle.y)
+        ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
+      }
+    })
+    ctx.fill()
+
+    // 绘制普通粒子
     ctx.fillStyle = 'rgba(128, 128, 128, 0.8)'
     ctx.beginPath()
     particles.forEach(particle => {
-      ctx.moveTo(particle.x + 1.5, particle.y)
-      ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
+      if (particle.distSq > 10000) {
+        ctx.moveTo(particle.x + 1.5, particle.y)
+        ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
+      }
     })
     ctx.fill()
   }
@@ -150,8 +180,10 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
         particles.push({
           x: Math.random() * canvasWidth,
           y: Math.random() * canvasHeight,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5
+          vx: Math.random() - 0.5,
+          vy: Math.random() - 0.5,
+          color: `rgba(128, 128, 128, 0.8)`,
+          distSq: 0
         })
       }
     }
@@ -159,6 +191,7 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
     if (canvas.value) {
       resizeCanvas()
       window.addEventListener('resize', resizeCanvas)
+      window.addEventListener('mousemove', handleMouseMove)
       if (timer) window.cancelAnimationFrame(timer)
 
       initParticles()
@@ -168,6 +201,7 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
 
   onUnmounted(() => {
     window.removeEventListener('resize', resizeCanvas)
+    window.removeEventListener('mousemove', handleMouseMove)
     if (timer) window.cancelAnimationFrame(timer)
   })
 }
