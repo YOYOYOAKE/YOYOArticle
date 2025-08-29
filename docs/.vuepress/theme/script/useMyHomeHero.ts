@@ -12,13 +12,13 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
   let mouseX: number = 0
   let mouseY: number = 0
 
+  const themeColor = { r: 54, g: 116, b: 181 }
+
   const particles: {
     x: number
     y: number
     vx: number
     vy: number
-    color: string
-    distSq: number
   }[] = []
 
   const resizeCanvas = () => {
@@ -43,7 +43,6 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
 
     const rect = canvas.value.getBoundingClientRect()
 
-    // 计算鼠标在画布上的坐标
     mouseX = event.clientX - rect.left
     mouseY = event.clientY - rect.top
   }
@@ -69,6 +68,8 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
     height: number
   ): void => {
     // 更新位置
+    const baseColor = { r: 128, g: 128, b: 128 }
+
     particles.forEach(particle => {
       particle.x += particle.vx
       particle.y += particle.vy
@@ -95,33 +96,26 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
         particle.vy *= 0.9
       }
 
-      // 计算距离平方
       const dx = particle.x - mouseX
       const dy = particle.y - mouseY
-      particle.distSq = dx * dx + dy * dy
-    })
+      const distSq = dx * dx + dy * dy
 
-    // 绘制高亮粒子
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
-    ctx.beginPath()
-    particles.forEach(particle => {
-      if (particle.distSq <= 10000) {
-        ctx.moveTo(particle.x + 1.5, particle.y)
-        ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
-      }
-    })
-    ctx.fill()
+      let r = baseColor.r
+      let g = baseColor.g
+      let b = baseColor.b
 
-    // 绘制普通粒子
-    ctx.fillStyle = 'rgba(128, 128, 128, 0.8)'
-    ctx.beginPath()
-    particles.forEach(particle => {
-      if (particle.distSq > 10000) {
-        ctx.moveTo(particle.x + 1.5, particle.y)
-        ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
+      if (distSq < 300 ** 2) {
+        const t = 1 - distSq / (300 ** 2)
+        r = baseColor.r + (themeColor.r - baseColor.r) * t
+        g = baseColor.g + (themeColor.g - baseColor.g) * t
+        b = baseColor.b + (themeColor.b - baseColor.b) * t
       }
+
+      ctx.fillStyle = `rgba(${r}, ${g}, ${b}, 1)`
+      ctx.beginPath()
+      ctx.arc(particle.x, particle.y, 1.5, 0, Math.PI * 2)
+      ctx.fill()
     })
-    ctx.fill()
   }
 
   const drawWaves = (
@@ -144,7 +138,7 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
       const yOffset = height * 0.06 + i * 15
 
       const alpha = 0.3 - i * 0.02
-      const fillStyle = `rgba(70, 120, 200, ${alpha})`
+      const fillStyle = `rgba(${themeColor.r}, ${themeColor.g}, ${themeColor.b}, ${alpha})`
 
       const path = new Path2D()
       path.moveTo(0, yOffset)
@@ -182,8 +176,6 @@ export default (canvas: Ref<HTMLCanvasElement | undefined>): void => {
           y: Math.random() * canvasHeight,
           vx: Math.random() - 0.5,
           vy: Math.random() - 0.5,
-          color: `rgba(128, 128, 128, 0.8)`,
-          distSq: 0
         })
       }
     }
