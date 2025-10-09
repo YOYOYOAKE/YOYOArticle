@@ -8,7 +8,7 @@ config:
     hero:
       name: YOYOMemo
       tagline: 日常开发中常用的技术和工具。
-      image: https://oss.yoake.cc/yoyopics/assets/fluent-color--document-folder-24.svg
+      image: https://oss.yoake.cc/art/assets/fluent-color--document-folder-24.svg
   -
     type: features
     features:

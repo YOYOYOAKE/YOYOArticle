@@ -205,7 +205,7 @@ error_symbol = "[➜](bold red) "
 最后呈现的效果如下：
 
 ::: center
-![1754802033554.webp](https://oss.yoake.cc/yoyopics/article/1754802033554.webp) 
+![1754802033554.webp](https://oss.yoake.cc/art/article/1754802033554.webp) 
 :::
 
 非常简洁、优雅、美观。

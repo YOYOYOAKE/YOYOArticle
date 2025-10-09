@@ -31,11 +31,11 @@ tags:
 
 来到 [`DefinitelyTyped/DefinitelyTyped`](https://github.com/DefinitelyTyped/DefinitelyTyped) 仓库中，将其 fork 到你的账号下。
 
-![1741607484816](https://oss.yoake.cc/yoyopics/article/250310-DefinitelyTyped/1741607484816.webp)
+![1741607484816](https://oss.yoake.cc/art/article/1741607484816.webp)
 
 操作完成后，你的账号下应该会多一个 `<用户名>/DefinitelyTyped`仓库，并且显示该仓库“forked from DefinitelyTyped/DefinitelyTyped”。
 
-![1741607593732](https://oss.yoake.cc/yoyopics/article/250310-DefinitelyTyped/1741607593732.webp)
+![1741607593732](https://oss.yoake.cc/art/article/1741607593732.webp)
 
 使用 `git clone`命令将你的仓库克隆到本地，并使用 `git checkout -b`命令或者你喜欢的 Git 可视化工具创建一个新分支。
 
