@@ -7,8 +7,8 @@ export const navbar = defineNavbarConfig([
     icon: 'material-symbols:home-rounded'
   },
   {
-    text: '博客',
-    link: '/blog/',
+    text: '文章',
+    link: '/articles/',
     icon: 'material-symbols:article-rounded'
   },
   {

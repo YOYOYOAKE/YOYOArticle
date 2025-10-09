@@ -8,8 +8,8 @@ const hero = {
   actions: [
     {
       theme: 'brand',
-      text: '我的博客',
-      link: '/blog/'
+      text: '我的文章',
+      link: '/articles/'
     },
     {
       theme: 'alt',

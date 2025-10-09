@@ -1,7 +1,8 @@
 import { viteBundler } from '@vuepress/bundler-vite'
 import { defineUserConfig } from 'vuepress'
 import { plumeTheme } from 'vuepress-theme-plume'
-import { notes } from './notes'
+// import { notes } from './notes'
+import collections from './collections'  
 
 export default defineUserConfig({
   base: '/',
@@ -17,7 +18,7 @@ export default defineUserConfig({
   bundler: viteBundler(),
 
   theme: plumeTheme({
-    notes,
+    collections,
 
     hostname: 'https://www.yoake.cc',
     footer: {
