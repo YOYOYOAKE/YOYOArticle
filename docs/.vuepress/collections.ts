@@ -54,7 +54,14 @@ const collections: ThemeCollections = [
     title: 'TypeScript 类型体操',
     sidebar: 'auto',
     linkPrefix: '/type-challanges/',
-  },  
+  },
+  {
+    type: 'doc',
+    dir: 'repos/web3d',
+    title: 'Web 3D 基础',
+    sidebar: 'auto',
+    linkPrefix: '/web3d/',
+  },
 ]
 
 export default collections
