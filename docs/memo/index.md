@@ -14,5 +14,4 @@ config:
         icon: skill-icons:github-light
         details: npm/pip/conda/apt/Docker 国内镜像
         link: /memo/mirrors/
-createTime: 2025/10/09 10:49:42
 ---
