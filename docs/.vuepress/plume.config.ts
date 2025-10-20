@@ -7,10 +7,6 @@ import collections from './collections'
  */
 export default defineThemeConfig({
   logo: 'https://oss.yoake.cc/art/avatars/avatar-round.webp',
-  // logo: false
-  // your git repo url
-  // docsRepo: '',
-  // docsDir: 'docs',
 
   appearance: true,
 
@@ -19,8 +15,6 @@ export default defineThemeConfig({
     name: 'YOAKE',
     description: 'Per Aspera Ad Astra.',
     circle: true,
-    // location: '',
-    // organization: '',
   },
 
   navbar,
@@ -29,5 +23,11 @@ export default defineThemeConfig({
   social: [
     { icon: 'github', link: 'https://github.com/yoyoyoake/' },
   ],
+
+  autoFrontmatter: {
+    createTime: false,
+  },
+
+  createTime: 'only-posts',
 
 })
