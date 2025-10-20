@@ -1,0 +1,1 @@
+import{_ as t,c as e,o as a}from"./app-BvfsiuvN.js";const r={};function n(s,c){return a(),e("div")}const i=t(r,[["render",n]]),l=JSON.parse('{"path":"/articles/","title":"文章","lang":"zh-CN","frontmatter":{"lang":"zh-CN","title":"文章","draft":true},"readingTime":{"minutes":0,"words":0},"git":{},"filePathRelative":null,"headers":[],"type":"posts"}');export{i as comp,l as data};
