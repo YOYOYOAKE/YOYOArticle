@@ -1,0 +1,18 @@
+---
+import { getNumPosts, getPinnedPosts } from '~/lib/data'
+import Layout from '~/layouts/layout.astro'
+import Home from '~/layouts/components/Main/Home/Home.astro'
+
+import { listsConfig } from '~/config'
+
+const homeConfig = listsConfig.home
+
+const pinnedPosts = await getPinnedPosts()
+const hasPinnedPosts = pinnedPosts.length > 0
+const showPosts = hasPinnedPosts ? pinnedPosts : await getNumPosts(homeConfig.recentPosts.size)
+const postsSubtitle = homeConfig.recentPosts.description
+---
+
+<Layout title={homeConfig.title} description={homeConfig.description}>
+  <Home config={homeConfig} posts={showPosts} {postsSubtitle} />
+</Layout>

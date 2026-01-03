@@ -1,0 +1,22 @@
+---
+import FooterNavi from './FooterNavi.astro'
+import FooterCopyright from './FooterCopyright.astro'
+import type { Link } from '~/types/config'
+
+interface Props {
+  links: Link[]
+  author: string
+  year?: number
+}
+
+const { links, author, year = new Date().getFullYear() } = Astro.props
+---
+
+<footer>
+  <div class="py-4 flex-none border-x border-border/50 global-layout-width mx-auto">
+    <div class="pb-8">
+      <FooterNavi {links} />
+      <FooterCopyright {author} {year} />
+    </div>
+  </div>
+</footer>

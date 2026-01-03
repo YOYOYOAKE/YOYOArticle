@@ -1,0 +1,19 @@
+---
+interface Props {
+  author: string
+  year: number
+}
+
+const { author, year } = Astro.props
+---
+
+<div class="text-sm text-muted-foreground px-6 sm:px-8 py-4">
+  <div class="items-center gap-4 font-medium">
+    <div>© 2024 - {year} All rights reserved {author}.</div>
+    <div>
+      Powered by
+      <a href="https://astro.build" target="_blank" rel="noopener noreferrer">Astro</a>, modified from
+      <a href="https://github.com/Dnzzk2/litos" target="_blank" rel="noopener noreferrer">Litos</a>.
+    </div>
+  </div>
+</div>

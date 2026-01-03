@@ -1,0 +1,84 @@
+---
+
+---
+
+<button
+  type="button"
+  class="theme-toggle inline-flex items-center justify-center text-foreground cursor-pointer hover:scale-105 size-6 origin-center"
+  data-theme-toggle
+  aria-label="Toggle theme"
+>
+  <span class="theme-icon theme-icon-sun icon-[tabler--sun-filled]" aria-hidden="true"></span>
+  <span class="theme-icon theme-icon-moon icon-[tabler--moon-filled]" aria-hidden="true"></span>
+</button>
+
+<style>
+  .theme-toggle {
+    position: relative;
+  }
+
+  .theme-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition:
+      transform 200ms ease-in-out,
+      opacity 200ms ease-in-out;
+  }
+
+  .theme-icon-sun {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+
+  .theme-icon-moon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-180deg) scale(0.6);
+  }
+
+  .dark .theme-icon-sun {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(180deg) scale(0.6);
+  }
+
+  .dark .theme-icon-moon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  }
+</style>
+
+<script is:inline>
+  ;(() => {
+    if (window.__themeToggleInit) return
+    window.__themeToggleInit = true
+
+    const STORAGE_KEY = 'theme'
+    const root = document.documentElement
+
+    const getTheme = () => localStorage.getItem(STORAGE_KEY) || 'light'
+    const applyTheme = (theme) => {
+      root.classList.toggle('dark', theme === 'dark')
+    }
+
+    const setTheme = (theme) => {
+      localStorage.setItem(STORAGE_KEY, theme)
+      applyTheme(theme)
+    }
+
+    applyTheme(getTheme())
+
+    document.addEventListener('click', (event) => {
+      const target = event.target
+      const button = target && target.closest ? target.closest('[data-theme-toggle]') : null
+      if (!button) return
+      const next = getTheme() === 'dark' ? 'light' : 'dark'
+      setTheme(next)
+    })
+
+    document.addEventListener('astro:after-swap', () => {
+      applyTheme(getTheme())
+    })
+  })()
+</script>

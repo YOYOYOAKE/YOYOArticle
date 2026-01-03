@@ -1,0 +1,33 @@
+---
+import PostContent from '~/layouts/components/Main/Content/Content.astro'
+import { getAllPosts } from '~/lib/data'
+import { render, type CollectionEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const sortedPosts = await getAllPosts()
+  return sortedPosts.map((post, index) => ({
+    params: { id: post.id },
+    props: {
+      post,
+      posts: sortedPosts,
+      prev: index > 0 ? sortedPosts[index - 1] : null,
+      next: index + 1 < sortedPosts.length ? sortedPosts[index + 1] : null,
+    },
+  }))
+}
+
+const { post, posts, prev, next } = Astro.props as {
+  post: CollectionEntry<'posts'>
+  posts: CollectionEntry<'posts'>[]
+  prev: CollectionEntry<'posts'> | null
+  next: CollectionEntry<'posts'> | null
+}
+
+const { data: frontmatter } = post
+const { Content: RenderedContent, headings, remarkPluginFrontmatter } = await render(post)
+const resolvedFrontmatter = { ...frontmatter, words: remarkPluginFrontmatter.words }
+---
+
+<PostContent collection="posts" frontmatter={resolvedFrontmatter} entry={post} entries={posts} {prev} {next} {headings}>
+  <RenderedContent />
+</PostContent>

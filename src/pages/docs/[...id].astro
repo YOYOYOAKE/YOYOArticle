@@ -1,0 +1,55 @@
+---
+import PostContent from '~/layouts/components/Main/Content/Content.astro'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+
+export async function getStaticPaths() {
+  const allDocs = await getCollection('docs')
+
+  const pages = allDocs
+    .filter((entry) => entry.id.includes('/') && !entry.id.endsWith('/entrance') && (entry.data as any).completed)
+    .sort((a, b) => {
+      const [aDir = ''] = a.id.split('/')
+      const [bDir = ''] = b.id.split('/')
+
+      if (aDir !== bDir) return aDir.localeCompare(bDir)
+
+      const aTitle = String((a.data as any).title ?? '')
+        .trim()
+        .toLowerCase()
+      const bTitle = String((b.data as any).title ?? '')
+        .trim()
+        .toLowerCase()
+      return aTitle.localeCompare(bTitle)
+    })
+
+  const getDir = (id: string) => id.split('/').slice(0, -1).join('/')
+
+  return pages.map((doc) => {
+    const dir = getDir(doc.id)
+    const siblings = pages.filter((item) => getDir(item.id) === dir)
+    const index = siblings.findIndex((item) => item.id === doc.id)
+    const prev = index > 0 ? siblings[index - 1] : null
+    const next = index + 1 < siblings.length ? siblings[index + 1] : null
+
+    return {
+      params: { id: doc.id },
+      props: { doc, pages, prev, next },
+    }
+  })
+}
+
+const { doc, pages, prev, next } = Astro.props as {
+  doc: CollectionEntry<'docs'>
+  pages: CollectionEntry<'docs'>[]
+  prev: CollectionEntry<'docs'> | null
+  next: CollectionEntry<'docs'> | null
+}
+
+const { data: frontmatter } = doc
+const { Content: RenderedContent, headings, remarkPluginFrontmatter } = await render(doc)
+const resolvedFrontmatter = { ...frontmatter, words: remarkPluginFrontmatter.words }
+---
+
+<PostContent collection="docs" frontmatter={resolvedFrontmatter} entry={doc} entries={pages} {prev} {next} {headings}>
+  <RenderedContent />
+</PostContent>

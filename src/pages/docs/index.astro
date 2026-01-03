@@ -1,0 +1,11 @@
+---
+import ItemsPage from '~/layouts/components/Main/Lists/ItemsList.astro'
+import { listsConfig } from '~/config'
+import { getDocsIndexItems } from '~/lib/data'
+
+const { title, description } = listsConfig.docsList
+
+const listItems = await getDocsIndexItems()
+---
+
+<ItemsPage {title} {description} items={listItems} />

@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from 'astro:content'
+
+interface Props {
+  prev: CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'> | null
+  next: CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'> | null
+  baseUrl: string
+}
+
+const { prev, next, baseUrl } = Astro.props
+const prevText = 'Previous'
+const nextText = 'Next'
+
+const getEntryTitle = (value: any) => value?.data?.title ?? value?.data?.name ?? ''
+---
+
+<div class="px-6 sm:px-8 pb-6 sm:pb-8 fade-up">
+  <nav class="flex flex-col sm:flex-row justify-between gap-6 pt-2 border-t border-border/50">
+    <div class="flex-1">
+      {
+        prev ? (
+          <a href={`${baseUrl}/${prev.id}`} class="group flex-1 relative block">
+            <div class="absolute -left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-1 transition-all duration-200">
+              <span class="icon-[ph--arrow-left] size-4 text-primary" />
+            </div>
+            <div class="group-hover:pl-6 transition-all duration-200">
+              <span class="text-[10px] uppercase tracking-widest text-muted-foreground/70">{prevText}</span>
+              <p class="mt-1.5 font-semibold text-base text-foreground/90 group-hover:text-primary transition-colors line-clamp-1">
+                {getEntryTitle(prev)}
+              </p>
+            </div>
+          </a>
+        ) : (
+          <div class="select-none opacity-45">
+            <span class="text-[10px] uppercase tracking-widest text-muted-foreground/70">{prevText}</span>
+            <p class="mt-1.5 font-semibold text-base text-foreground/70 line-clamp-1">NO PREVIOUS</p>
+          </div>
+        )
+      }
+    </div>
+
+    <div class="flex-1 text-right">
+      {
+        next ? (
+          <a href={`${baseUrl}/${next.id}`} class="group flex-1 relative block">
+            <div class="absolute -right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-200">
+              <span class="icon-[ph--arrow-right] size-4 text-primary" />
+            </div>
+            <div class="group-hover:pr-6 transition-all duration-200">
+              <span class="text-[10px] uppercase tracking-widest text-muted-foreground/70">{nextText}</span>
+              <p class="mt-1.5 font-semibold text-base text-foreground/90 group-hover:text-primary transition-colors line-clamp-1">
+                {getEntryTitle(next)}
+              </p>
+            </div>
+          </a>
+        ) : (
+          <div class="select-none opacity-45">
+            <span class="text-[10px] uppercase tracking-widest text-muted-foreground/70">{nextText}</span>
+            <p class="mt-1.5 font-semibold text-base text-foreground/70 line-clamp-1">NO NEXT</p>
+          </div>
+        )
+      }
+    </div>
+  </nav>
+</div>

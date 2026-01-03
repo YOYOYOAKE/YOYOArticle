@@ -1,0 +1,29 @@
+---
+import HomeIntroCard from './HomeIntroCard.astro'
+import HomeSkillCard from './HomeSkillCard.astro'
+import HomeRecentPostsCard from './HomeRecentPostsCard.astro'
+import type { CollectionEntry } from 'astro:content'
+import type { HomeConfig } from '~/types/config'
+
+interface Props {
+  postsSubtitle: string
+  config: HomeConfig
+  posts: CollectionEntry<'posts'>[]
+}
+
+const { config, postsSubtitle, posts } = Astro.props
+---
+
+<div class="relative z-[1]">
+  <HomeIntroCard introTitle={config.title} introSubtitle={config.description} introParagraphs={config.intro} socialLinks={config.social} />
+  {
+    config.skillsCard.enabled && config.skillsCard.data.length > 0 && (
+      <div class="fade-up">
+        <HomeSkillCard config={config.skillsCard} />
+      </div>
+    )
+  }
+  <div class="fade-up">
+    <HomeRecentPostsCard title={config.recentPosts.title} {postsSubtitle} {posts} />
+  </div>
+</div>

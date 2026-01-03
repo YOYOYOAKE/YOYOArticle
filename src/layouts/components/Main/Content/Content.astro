@@ -1,0 +1,76 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { MarkdownHeading } from 'astro'
+import { listsConfig } from '~/config'
+import Layout from '~/layouts/layout.astro'
+import ReposMenu from '~/layouts/components/Main/Content/LeftSidebar/ReposMenu.astro'
+import ArticleMenu from '~/layouts/components/Main/Content/RightSidebar/ArticleMenu.astro'
+import BackToTop from '~/layouts/components/Main/Content/RightSidebar/BackToTop.astro'
+import BackButton from '~/layouts/components/Main/Content/RightSidebar/BackButton.astro'
+import ArticleNavi from './Article/ArticleNavi.astro'
+import ArticleMeta from './Article/ArticleMeta.astro'
+import ArticleContent from './Article/ArticleContent.astro'
+
+interface Props {
+  collection: 'posts' | 'jottings' | 'docs'
+  frontmatter: any
+  entry: CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'>
+  entries: (CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'>)[]
+  headings: MarkdownHeading[]
+  prev: CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'> | null
+  next: CollectionEntry<'posts'> | CollectionEntry<'jottings'> | CollectionEntry<'docs'> | null
+}
+
+const { collection, frontmatter, entry, entries, headings, prev, next } = Astro.props
+const filterHeadings = headings.filter((heading) => heading.slug !== 'footnote-label')
+
+const getEntryTitle = (value: any) => value?.data?.title ?? value?.data?.name ?? ''
+const pageTitle = frontmatter?.title ?? getEntryTitle(entry)
+const pageDescription = frontmatter?.description || pageTitle
+
+const isArticle = collection === 'posts' || collection === 'jottings'
+const postIndex = isArticle ? (entries as any[]).findIndex((p) => p.id === entry.id) : -1
+const backHref =
+  collection === 'posts'
+    ? (() => {
+        const pageSize = listsConfig.postsList.pagination.eachPageSize
+        const pageNumber = Math.floor(postIndex / pageSize) + 1
+        return pageNumber === 1 ? '/posts' : `/posts/${pageNumber}`
+      })()
+    : collection === 'jottings'
+      ? (() => {
+          const pageSize = listsConfig.jottingsList.pagination.eachPageSize
+          const pageNumber = Math.floor(postIndex / pageSize) + 1
+          return pageNumber === 1 ? '/jottings' : `/jottings/${pageNumber}`
+        })()
+      : '/docs'
+const backLabel = collection === 'posts' ? 'Back to Posts' : collection === 'jottings' ? 'Back to Jottings' : 'Back to Docs'
+const entriesBaseUrl = collection === 'posts' ? '/posts' : collection === 'jottings' ? '/jottings' : '/docs'
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <div class="relative flex flex-col justify-between h-fit z-[1]">
+    <ReposMenu {entry} {entries} baseUrl={entriesBaseUrl} />
+    <article class="relative fade-up">
+      <div class="px-6 sm:px-8 py-4 sm:py-6 lg:py-8">
+        <div class="global-layout-width mx-auto">
+          <ArticleMeta {frontmatter} />
+          <ArticleContent>
+            <slot />
+          </ArticleContent>
+        </div>
+      </div>
+    </article>
+    <ArticleNavi prev={prev as any} next={next as any} baseUrl={entriesBaseUrl} />
+
+    {filterHeadings.length > 0 && <ArticleMenu headings={filterHeadings} class="fade-up" />}
+    <BackToTop id="backToTopMobile" class="xl:hidden fixed bottom-14 sm:right-8 right-6 z-50 flex flex-col gap-3" />
+
+    <div class="hidden xl:flex fixed bottom-24 right-[calc(50%-384px)] translate-x-full p-4">
+      <div class="flex items-center gap-2">
+        <BackButton href={backHref} label={backLabel} />
+        <BackToTop id="backToTopDesktop" />
+      </div>
+    </div>
+  </div>
+</Layout>

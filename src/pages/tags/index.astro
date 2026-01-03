@@ -1,0 +1,8 @@
+---
+import TagsList from '~/layouts/components/Main/Lists/TagsList.astro'
+import { getAllPosts, getAllTags } from '~/lib/data'
+
+const [tagsMap, posts] = await Promise.all([getAllTags(), getAllPosts()])
+---
+
+<TagsList {tagsMap} {posts} />

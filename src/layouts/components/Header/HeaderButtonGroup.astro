@@ -1,0 +1,9 @@
+---
+import SearchButton from '~/layouts/components/Header/HeaderButtonGroup/SearchButton.astro'
+import DarkModeButton from '~/layouts/components/Header/HeaderButtonGroup/DarkModeButton.astro'
+---
+
+<div class="flex gap-2 items-center" transition:persist="header-theme-toggle">
+  <SearchButton />
+  <DarkModeButton />
+</div>

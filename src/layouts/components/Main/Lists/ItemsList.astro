@@ -1,0 +1,59 @@
+---
+import { cn } from '~/lib/utils'
+import Layout from '~/layouts/layout.astro'
+import ListTitle from '~/layouts/components/Main/Lists/ListTitle.astro'
+
+type ItemsListEntry = {
+  name: string
+  description: string
+  url: string
+  icon?: string
+}
+
+interface Props {
+  title: string
+  description: string
+  items: ItemsListEntry[]
+}
+
+const { title, description, items } = Astro.props
+
+const isIconClass = (icon: string) => icon.startsWith('icon-[') || icon.startsWith('icon-')
+const isExternalLink = (url: string) => /^https?:\/\//i.test(url)
+---
+
+<Layout {title} {description}>
+  <div class="relative z-[1] py-8 pb-10">
+    <div class="px-6 sm:px-8">
+      <ListTitle {title} {description} />
+    </div>
+    <div class="grid grid-cols-1 fade-up">
+      {
+        items.map((item) => (
+          <div>
+            <a
+              href={item.url}
+              target={isExternalLink(item.url) ? '_blank' : undefined}
+              rel={isExternalLink(item.url) ? 'noopener noreferrer' : undefined}
+              class="group relative flex items-center gap-4 hover:bg-muted/30 dark:hover:bg-muted/30 transition-colors duration-300 px-6 sm:px-8 py-4"
+            >
+              {item.icon && (
+                <div class="flex-shrink-0 mt-0.5">
+                  {isIconClass(item.icon) ? (
+                    <span class={cn('size-10', item.icon)} />
+                  ) : (
+                    <img src={item.icon} alt="icon" class="size-10 rounded-full object-cover" />
+                  )}
+                </div>
+              )}
+              <div class="min-w-0">
+                <div class="font-semibold text-lg/relaxed">{item.name}</div>
+                <p class="text-muted-foreground">{item.description}</p>
+              </div>
+            </a>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

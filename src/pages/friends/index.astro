@@ -1,0 +1,17 @@
+---
+import ItemsPage from '~/layouts/components/Main/Lists/ItemsList.astro'
+import { listsConfig } from '~/config'
+import { getAllFriends } from '~/lib/data'
+
+const friends = await getAllFriends()
+const { title, description } = listsConfig.friendsList
+
+const listItems = friends.map((item) => ({
+  name: item.data.name,
+  description: item.data.description,
+  url: item.data.website,
+  icon: item.data.icon,
+}))
+---
+
+<ItemsPage {title} {description} items={listItems} />

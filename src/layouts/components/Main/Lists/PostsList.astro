@@ -1,0 +1,27 @@
+---
+import type { Page } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import Layout from '~/layouts/layout.astro'
+import ListPagination from '~/layouts/components/Main/Lists/ListPagination.astro'
+import PostsListItems from '~/layouts/components/Main/Lists/PostsListItems.astro'
+import ListTitle from '~/layouts/components/Main/Lists/ListTitle.astro'
+
+interface Props {
+  page: Page<CollectionEntry<'posts'> | CollectionEntry<'jottings'>>
+  title: string
+  description: string
+  baseUrl: string
+}
+
+const { page, title, description, baseUrl } = Astro.props
+---
+
+<Layout {title} {description}>
+  <div class="relative z-[1] py-8 pb-10 px-6 sm:px-8">
+    <ListTitle {title} {description} />
+    <div class="mt-12 fade-up">
+      <PostsListItems posts={page.data as any} {baseUrl} />
+    </div>
+    <ListPagination {page} {baseUrl} />
+  </div>
+</Layout>

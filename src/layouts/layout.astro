@@ -1,0 +1,86 @@
+---
+import '~/styles/global.css'
+import '~/styles/markdown.css'
+import { navigatorConfig, siteConfig } from '~/config'
+import { ClientRouter } from 'astro:transitions'
+import Divider from '~/layouts/components/Divider/Divider.astro'
+import Header from '~/layouts/components/Header/Header.astro'
+import Footer from '~/layouts/components/Footer/Footer.astro'
+
+type Props = {
+  title: string
+  description: string
+  image?: string
+}
+
+const { title, description, image }: Props = Astro.props
+
+const avatarSrc = siteConfig.avatarSrc
+const defaultOgImage = '/og-image.webp'
+---
+
+<!doctype html>
+<html lang={siteConfig.lang} transition:name="root" transition:animate="none">
+  <head>
+    <!-- 页面内SEO  On-Page SEO -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="google" content="notranslate" />
+
+    <title>{`${title} | ${siteConfig.title}`}</title>
+    <meta name="title" content={`${title} | ${siteConfig.title}`} />
+    <meta name="description" content={description} />
+    <meta name="author" content={siteConfig.author} />
+
+    <!-- color -->
+    <meta name="theme-color" content="" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- icon -->
+    <link rel="icon" type="image/x-icon" href={avatarSrc} />
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+    <!-- 预加载 -->
+
+    <!-- 标准链接  Canonical URL -->
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph & Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
+    <meta property="og:site_name" content={siteConfig.title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image || defaultOgImage, Astro.url)} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={`${title} | ${siteConfig.title}`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image || defaultOgImage, Astro.url)} />
+
+    <ClientRouter fallback="swap" />
+  </head>
+
+  <body class="flex flex-col">
+    <Header links={navigatorConfig.headerNaviLinks} {avatarSrc} />
+
+    <Divider className="border-t-border dark:border-t-border/50" />
+
+    <div class="grow flex">
+      <main class="relative border-x border-border/50 global-layout-width mx-auto grow min-w-0">
+        <slot />
+      </main>
+    </div>
+
+    <Divider className="border-t-border dark:border-t-border/50" />
+
+    <Footer links={navigatorConfig.footerNaviLinks} author={siteConfig.author} />
+  </body>
+</html>

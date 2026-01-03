@@ -1,0 +1,59 @@
+---
+import { cn } from '~/lib/utils'
+
+interface Props {
+  entry: any
+  entries: any[]
+  baseUrl: string
+  title?: string
+}
+
+const { entry, entries, baseUrl } = Astro.props
+
+const getEntryTitle = (value: any) => value?.data?.title ?? value?.data?.name ?? value?.id ?? ''
+const getDir = (id: string) => {
+  const parts = id.split('/')
+  return parts.length > 1 ? parts.slice(0, -1).join('/') : ''
+}
+const currentDir = getDir(entry.id)
+const siblingEntries = entries.filter((item) => getDir(item.id) === currentDir)
+---
+
+<div class="hidden xl:block fixed top-30 left-[calc(50%-384px)] -translate-x-full w-[clamp(12rem,18vw,18rem)] fade-up">
+  <nav class="p-4">
+    <h3 class="font-sans text-sm font-medium mb-4 text-foreground/80 flex items-center gap-2 pl-2">
+      <span class="icon-[ph--folder-notch-open] w-4 h-4 opacity-85"></span>
+      <span>In this repo</span>
+    </h3>
+    <div class="relative h-[calc(100vh-24rem)] overflow-hidden">
+      <ul class="space-y-2 overflow-y-auto no-scrollbar pr-1" style="content-visibility: auto;">
+        {
+          siblingEntries.map((item, index) => {
+            const isActive = item.id === entry.id
+            const itemTitle = getEntryTitle(item)
+            return (
+              <li>
+                <a
+                  href={`${baseUrl}/${item.id}`}
+                  data-active={isActive ? '' : undefined}
+                  class={cn(
+                    'group flex items-center text-sm min-h-[1.75rem] w-full overflow-hidden relative',
+                    'hover:bg-gradient-to-r hover:from-primary/10 dark:hover:from-primary/25 hover:to-transparent',
+                    'data-[active]:bg-gradient-to-r data-[active]:from-primary/10 dark:data-[active]:from-primary/25 data-[active]:to-transparent'
+                  )}
+                >
+                  <span class="font-mono flex items-center px-2 text-xs text-primary/50 group-hover:text-primary group-data-[active]:text-primary min-w-[2rem]">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span class="leading-[1.75rem] truncate pr-2 group-hover:text-primary group-data-[active]:text-primary" title={itemTitle}>
+                    {itemTitle}
+                  </span>
+                </a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </div>
+  </nav>
+</div>

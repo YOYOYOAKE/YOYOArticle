@@ -1,0 +1,35 @@
+---
+import HeaderGradient from './HeaderGradient.astro'
+import HeaderAvatar from './HeaderAvatar.astro'
+import HeaderNavi from './HeaderNavi.astro'
+import HeaderButtonGroup from './HeaderButtonGroup.astro'
+import type { Link } from '~/types/config'
+
+interface Props {
+  links: Link[]
+  avatarSrc: string
+}
+
+const { links, avatarSrc } = Astro.props
+---
+
+<HeaderGradient />
+<header>
+  <div class="mx-auto global-layout-width flex flex-wrap items-center gap-x-3 gap-y-2 px-6 sm:px-8 py-4 lg:px-8 sm:gap-x-6">
+    <div class="order-1 flex items-center flex-shrink-0">
+      <HeaderAvatar src={avatarSrc} alt="Avatar" width={32} height={32} />
+    </div>
+    <div class="order-3 w-full sm:order-2 sm:w-auto">
+      <HeaderNavi {links} />
+    </div>
+    <div class="order-2 ml-auto flex items-center flex-shrink-0">
+      <HeaderButtonGroup />
+    </div>
+  </div>
+  <div class="relative global-layout-width mx-auto pointer-events-none">
+    <div aria-hidden="true" class="absolute inset-x-0 -top-14 bottom-0 mx-auto global-layout-width">
+      <div class="to-(--color-border)/50 absolute bottom-0 left-0 top-0 w-px bg-gradient-to-b from-transparent to-75%"></div>
+      <div class="to-(--color-border)/50 absolute bottom-0 right-0 top-0 w-px bg-gradient-to-b from-transparent to-75%"></div>
+    </div>
+  </div>
+</header>

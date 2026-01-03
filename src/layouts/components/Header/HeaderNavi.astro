@@ -1,0 +1,28 @@
+---
+import { cn } from '~/lib/utils'
+import type { Link } from '~/types/config'
+
+interface Props {
+  links: Link[]
+}
+
+const { links } = Astro.props
+---
+
+<div class="flex gap-1">
+  {
+    links.map((link) => (
+      <a
+        href={link.url}
+        class={cn(
+          'text-sm px-2 sm:px-4 py-2 font-medium first:pl-0 sm:first:pl-4',
+          'transition-colors text-foreground/50 hover:bg-accent hover:text-foreground',
+          (link.url === '/' ? Astro.url.pathname === '/' : Astro.url.pathname.startsWith(link.url)) && 'text-foreground'
+        )}
+        rel="prefetch"
+      >
+        {link.name}
+      </a>
+    ))
+  }
+</div>

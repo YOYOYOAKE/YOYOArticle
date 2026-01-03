@@ -1,0 +1,14 @@
+---
+import { Image } from 'astro:assets'
+
+interface Props {
+  src: string
+  alt: string
+  width: number
+  height: number
+}
+
+const { src, alt, width, height } = Astro.props
+---
+
+<Image {src} {width} {height} {alt} class="w-8 h-8" densities={[1, 2]} />
